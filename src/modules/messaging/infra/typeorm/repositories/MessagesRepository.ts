@@ -34,14 +34,23 @@ export default class MessagesRepository implements IMessagesRepository {
   }: ICreateMessageDTO): Promise<Message> {
     const message = this.ormRepository.create({
       body,
+
       from,
+
       to,
+
       messageStatus,
+
       messageSID,
+
       accountSID,
+
       priceUnit,
+
       price,
+
       mediaContentType,
+
       mediaUrl,
     });
 
