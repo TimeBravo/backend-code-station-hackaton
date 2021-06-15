@@ -16,11 +16,8 @@ export default function ensureAuthenticated(request: Request, response: Response
   const authHeader = request.headers.authorization;
 
   /**
-
    * |Temporary
-
    */
-
   const twilioHeader = request.headers["x-twilio-signature"];
 
   if (twilioHeader) {

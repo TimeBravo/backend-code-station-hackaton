@@ -1,9 +1,6 @@
 import "reflect-metadata";
-
 import "dotenv/config";
-
 import "@shared/infra/typeorm";
-
 import "@shared/container";
 
 import { errors, isCelebrateError } from "celebrate";
