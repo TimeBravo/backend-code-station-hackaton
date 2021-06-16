@@ -1,9 +1,8 @@
+import sessionRouter from "@modules/users/infra/http/routes/sessions.routes";
 import { Router } from "express";
-
-import ordersRoutes from "./orders.routes";
 
 const routes = Router();
 
-routes.use("/orders", ordersRoutes);
+routes.use("/authenticate", sessionRouter);
 
 export default routes;

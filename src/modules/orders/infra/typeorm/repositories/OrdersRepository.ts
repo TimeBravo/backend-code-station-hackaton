@@ -10,15 +10,26 @@ export default class OrdersRepository implements IOrdersRepository {
     this.repository = getRepository(Order);
   }
 
-  async create(orderData: ICreateOrderDTO): Promise<Order> {
-    const createOrder = this.repository.create(orderData);
+  public async findAllOrders(): Promise<Order[]> {
+    const orders = await this.repository.find();
+    return orders;
+  }
 
-    const order = await this.repository.save(createOrder);
+  public async create(orderData: ICreateOrderDTO): Promise<Order> {
+    const order = this.repository.create(orderData);
+
+    await this.save(order);
 
     return order;
   }
 
-  async findById(id: string): Promise<Order | undefined> {
+  public async save(order: Order): Promise<Order> {
+    const savedOrder = await this.repository.save(order);
+
+    return savedOrder;
+  }
+
+  public async findById(id: string): Promise<Order | undefined> {
     const orderId = await this.repository.findOne(id);
 
     return orderId;

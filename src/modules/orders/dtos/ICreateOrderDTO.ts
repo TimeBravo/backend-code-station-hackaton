@@ -3,5 +3,4 @@ export default interface ICreateOrderDTO {
   clientEmail: string;
   clientPhone: string;
   productName: string;
-  status?: boolean;
 }

@@ -3,16 +3,25 @@ import Order from "@modules/orders/infra/typeorm/entities/Order";
 import IOrdersRepository from "@modules/orders/repositories/IOrdersRepository";
 import { v4 as uuidV4 } from "uuid";
 
-export default class UsersRepositoryInMemory implements IOrdersRepository {
+export default class FakeOrdersRepository implements IOrdersRepository {
   orders: Order[] = [];
+
+  async findAllOrders(): Promise<Order[]> {
+    return this.orders;
+  }
 
   async create(orderData: ICreateOrderDTO): Promise<Order> {
     const order = new Order();
 
     Object.assign(order, { id: uuidV4() }, orderData);
 
-    this.orders.push(order);
+    this.save(order);
 
+    return order;
+  }
+
+  async save(order: Order): Promise<Order> {
+    this.orders.push(order);
     return order;
   }
 

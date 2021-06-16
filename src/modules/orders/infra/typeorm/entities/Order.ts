@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import Stage from "@modules/stages/infra/typeorm/entities/Stage";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("orders")
 export default class Order {
@@ -17,8 +18,11 @@ export default class Order {
   @Column({ name: "product_name" })
   productName: string;
 
-  @Column()
-  status: boolean;
+  @Column({ name: "is_completed" })
+  isCompleted: boolean;
+
+  @OneToMany(() => Stage, (stage) => stage.order, { cascade: true })
+  stages: Stage[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
