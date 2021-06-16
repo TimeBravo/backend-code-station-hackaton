@@ -1,5 +1,5 @@
 import ICreateUserDTO from "@modules/users/dtos/ICreateUserDTO";
-import User from "@modules/users/infra/typeorm/models/User";
+import User from "@modules/users/infra/typeorm/entities/User";
 
 export default interface IUserRepository {
   findById(id: string): Promise<User | undefined>;

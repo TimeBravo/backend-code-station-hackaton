@@ -1,4 +1,5 @@
 import Order from "@modules/orders/infra/typeorm/entities/Order";
+import { Exclude } from "class-transformer";
 import {
   Column,
   CreateDateColumn,
@@ -30,9 +31,11 @@ export default class Stage {
   @Column("simple-array")
   photos: string[];
 
+  @Exclude()
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 }

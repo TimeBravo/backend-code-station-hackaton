@@ -1,5 +1,5 @@
 import authConfig from "@config/auth";
-import User from "@modules/users/infra/typeorm/models/User";
+import User from "@modules/users/infra/typeorm/entities/User";
 import { sign } from "jsonwebtoken";
 import { injectable, inject } from "tsyringe";
 

@@ -1,5 +1,6 @@
 import CreateOrderService from "@modules/orders/services/CreateOrderService";
 import ListOrderService from "@modules/orders/services/ListOrderService";
+import { classToClass } from "class-transformer";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -17,7 +18,7 @@ export default class OrderController {
       stageList,
     });
 
-    return response.status(201).json(order);
+    return response.status(201).json(classToClass(order));
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
@@ -25,6 +26,6 @@ export default class OrderController {
 
     const orders = await listOrderService.execute();
 
-    return response.json(orders);
+    return response.json(classToClass(orders));
   }
 }

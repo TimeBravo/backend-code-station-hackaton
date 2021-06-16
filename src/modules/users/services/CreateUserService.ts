@@ -1,4 +1,4 @@
-import User from "@modules/users/infra/typeorm/models/User";
+import User from "@modules/users/infra/typeorm/entities/User";
 import IHashProvider from "@modules/users/providers/hashProvider/models/IHashProvider";
 import { injectable, inject } from "tsyringe";
 

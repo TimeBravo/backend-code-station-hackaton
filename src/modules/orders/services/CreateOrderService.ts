@@ -7,7 +7,7 @@ import AppError from "@shared/errors/AppError";
 
 interface IRequest {
   clientName: string;
-  clientEmail: string;
+  clientEmail?: string;
   clientPhone: string;
   productName: string;
   stageList: string[];
@@ -20,12 +20,12 @@ export default class CreateOrderService {
     private ordersRepository: IOrdersRepository
   ) {}
 
-  async execute({ clientName, clientEmail, clientPhone, productName, stageList }: IRequest): Promise<Order> {
-    const isDuplicatedStage = stageList.some((element, index) => {
-      return stageList.indexOf(element) !== index;
+  public async execute({ clientName, clientEmail, clientPhone, productName, stageList }: IRequest): Promise<Order> {
+    const existsDuplicatedStage = stageList.some((element, index) => {
+      return stageList.indexOf(element.toLowerCase()) !== index;
     });
 
-    if (isDuplicatedStage) throw new AppError("You cannot add a new order with duplicated stages");
+    if (existsDuplicatedStage) throw new AppError("You cannot add a new order with duplicated stages");
 
     const order = await this.ordersRepository.create({
       clientName,
