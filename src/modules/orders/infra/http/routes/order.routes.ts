@@ -4,6 +4,7 @@ import { Router } from "express";
 import ensureAuthenticated from "@shared/infra/http/middlewares/ensureAuthentication";
 
 import OrderController from "../controllers/OrderController";
+import orderDetailsRoutes from "./orderDetails.routes";
 
 const orderRoutes = Router();
 
@@ -28,5 +29,7 @@ orderRoutes.post(
 );
 
 orderRoutes.get("/", orderController.index);
+
+orderRoutes.use(orderDetailsRoutes);
 
 export default orderRoutes;
