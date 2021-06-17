@@ -21,8 +21,12 @@ export default class CreateOrderService {
   ) {}
 
   public async execute({ clientName, clientEmail, clientPhone, productName, stageList }: IRequest): Promise<Order> {
+    if (stageList.length === 0) {
+      throw new AppError("You cannot register an order with an empty stageList");
+    }
+
     const existsDuplicatedStage = stageList.some((element, index) => {
-      return stageList.indexOf(element.toLowerCase()) !== index;
+      return stageList.indexOf(element) !== index;
     });
 
     if (existsDuplicatedStage) throw new AppError("You cannot add a new order with duplicated stages");

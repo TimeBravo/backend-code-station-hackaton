@@ -25,6 +25,7 @@ export default class Stage {
   @JoinColumn({ name: "order_id" })
   order: Order;
 
+  @Exclude()
   @Column({ name: "order_id" })
   orderID: string;
 

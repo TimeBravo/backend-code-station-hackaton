@@ -16,9 +16,11 @@ class User {
   @Exclude()
   password: string;
 
+  @Exclude()
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 }
