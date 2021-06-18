@@ -42,7 +42,7 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
       details: error.details,
     });
   }
-
+  console.log(error);
   return response.status(500).json({
     status: 500,
     message: "internal server error",
