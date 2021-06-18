@@ -1,5 +1,6 @@
+import uploadConfig from "@config/upload";
 import Order from "@modules/orders/infra/typeorm/entities/Order";
-import { Exclude } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 import {
   Column,
   CreateDateColumn,
@@ -29,6 +30,7 @@ export default class Stage {
   @Column({ name: "order_id" })
   orderID: string;
 
+  @Exclude()
   @Column("simple-array")
   photos: string[];
 
@@ -39,4 +41,27 @@ export default class Stage {
   @Exclude()
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
+
+  @Expose({ name: "pictures_url" })
+  getAvatarURL(): string[] | null {
+    if (!this.photos) return null;
+    let baseUrl: string;
+
+    switch (uploadConfig.driver) {
+      case "disk":
+        baseUrl = `${process.env.APP_API_URL}/files/`;
+        break;
+      case "s3":
+        baseUrl = `https://${uploadConfig.config.aws.bucket}.s3-sa-east-1.amazonaws.com/`;
+        break;
+      default:
+        return null;
+    }
+
+    const urls = this.photos.map((pic) => {
+      return baseUrl + pic;
+    });
+
+    return urls;
+  }
 }
