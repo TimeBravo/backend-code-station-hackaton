@@ -6,7 +6,9 @@ export default class FakeStagesRepository implements IStagesRepository {
   private stages: Stage[] = [];
 
   public async save(stage: Stage): Promise<Stage> {
-    this.stages.push(stage);
+    const stageIndex = this.stages.findIndex((stg) => stg.id === stage.id);
+    if (stageIndex === -1) this.stages.push(stage);
+    else this.stages[stageIndex] = stage;
     return stage;
   }
   public async findByID(stageID: string): Promise<Stage | undefined> {

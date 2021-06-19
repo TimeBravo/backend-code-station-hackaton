@@ -15,7 +15,7 @@ export default class StagesRepository implements IStagesRepository {
   }
 
   public async findByID(stageID: string): Promise<Stage | undefined> {
-    const stage = await this.repository.findOne(stageID, { relations: ["order"] });
+    const stage = await this.repository.findOne(stageID, { relations: ["order", "order.stages"] });
     return stage;
   }
 }
