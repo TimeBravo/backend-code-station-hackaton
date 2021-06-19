@@ -1,3 +1,4 @@
+import SendMessageService from "@modules/messaging/services/SendMessageService";
 import CreateOrderService from "@modules/orders/services/CreateOrderService";
 import ListOrderService from "@modules/orders/services/ListOrderService";
 import { classToClass } from "class-transformer";
@@ -17,6 +18,12 @@ export default class OrderController {
       productName,
       stageList,
     });
+
+    const sendMessageService = container.resolve(SendMessageService);
+
+    const body = `Olá ${order.clientName}, seu pedido de id ${order.id} foi registrado a primeira etapa é ${order.stages[0].name} acesse o link testeUrl para visualizar seu pedido`;
+
+    await sendMessageService.execute({ to: order.clientPhone, from: "+14155238886", body });
 
     return response.status(201).json(classToClass(order));
   }
