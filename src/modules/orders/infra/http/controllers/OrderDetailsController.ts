@@ -1,4 +1,4 @@
-import GetOrderByIDService from "@modules/orders/services/GetOrderByIDSerice";
+import GetOrderByIDService from "@modules/orders/services/GetOrderByIDService";
 import { classToClass } from "class-transformer";
 import { Request, Response } from "express";
 import { container } from "tsyringe";

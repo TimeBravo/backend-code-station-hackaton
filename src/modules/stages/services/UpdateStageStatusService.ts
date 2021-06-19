@@ -1,5 +1,4 @@
-import SendMessageService from "@modules/messaging/services/SendMessageService";
-import { container, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import AppError from "@shared/errors/AppError";
 
@@ -23,12 +22,6 @@ export default class UpdateStageStatusService {
     else stage.status = "FINISHED";
 
     await this.stageRepository.save(stage);
-
-    const sendMessageService = container.resolve(SendMessageService);
-
-    const body = `Olá ${stage.order.clientName}, seu pedido de id ${stage.orderID} teve o status da etapa ${stage.name} atualizado para ${stage.status} acesse o link testeUrl para visualizar seu pedido`;
-
-    await sendMessageService.execute({ to: stage.order.clientPhone, from: "+14155238886", body });
 
     return stage;
   }
