@@ -3,6 +3,7 @@ import IOrdersRepository from "@modules/orders/repositories/IOrdersRepository";
 import Stage from "@modules/stages/infra/typeorm/entities/Stage";
 import { injectable, inject } from "tsyringe";
 
+import ICacheProvider from "@shared/container/providers/cacheProvider/models/ICacheProvider";
 import AppError from "@shared/errors/AppError";
 
 interface IRequest {
@@ -17,7 +18,10 @@ interface IRequest {
 export default class CreateOrderService {
   constructor(
     @inject("OrdersRepository")
-    private ordersRepository: IOrdersRepository
+    private ordersRepository: IOrdersRepository,
+
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider
   ) {}
 
   public async execute({ clientName, clientEmail, clientPhone, productName, stageList }: IRequest): Promise<Order> {
@@ -48,6 +52,8 @@ export default class CreateOrderService {
     order.stages = stages;
 
     await this.ordersRepository.save(order);
+
+    await this.cacheProvider.invalidatePrefix(`orders`);
 
     return order;
   }
