@@ -52,9 +52,11 @@ export default class CreateOrderService {
 
     order.stages = stages;
 
+    order.stages[0].status = "STARTED";
+
     await this.ordersRepository.save(order);
 
-    await this.cacheProvider.invalidatePrefix(`orders`);
+    await this.cacheProvider.invalidate(`orders`);
 
     return order;
   }
