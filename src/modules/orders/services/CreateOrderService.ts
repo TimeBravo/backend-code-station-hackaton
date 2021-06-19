@@ -11,7 +11,7 @@ interface IRequest {
   clientEmail?: string;
   clientPhone: string;
   productName: string;
-  stageList: string[];
+  stageList: { stageName: string; stageDescription: string }[];
 }
 
 @injectable()
@@ -28,9 +28,9 @@ export default class CreateOrderService {
     if (stageList.length === 0) {
       throw new AppError("You cannot register an order with an empty stageList");
     }
-
-    const existsDuplicatedStage = stageList.some((element, index) => {
-      return stageList.indexOf(element) !== index;
+    const stagesName = stageList.map((element) => element.stageName);
+    const existsDuplicatedStage = stagesName.some((element, index) => {
+      return stagesName.indexOf(element) !== index;
     });
 
     if (existsDuplicatedStage) throw new AppError("You cannot add a new order with duplicated stages");
@@ -42,9 +42,10 @@ export default class CreateOrderService {
       productName,
     });
 
-    const stages = stageList.map((stageName) => {
+    const stages = stageList.map((stageDTO) => {
       const stage = new Stage();
-      stage.name = stageName;
+      stage.name = stageDTO.stageName;
+      stage.description = stageDTO.stageDescription;
       stage.orderID = order.id;
       return stage;
     });

@@ -1,13 +1,17 @@
+import FakeCacheProvider from "@shared/container/providers/cacheProvider/fakes/FakeCacheProvider";
+
 import FakeOrdersRepository from "../repositories/fakes/FakeOrdersRepository";
 import ListOrderService from "./ListOrderService";
 
 let listOrderService: ListOrderService;
 let ordersRepository: FakeOrdersRepository;
+let fakeCacheProvider: FakeCacheProvider;
 
 describe("List Order Service", () => {
   beforeEach(() => {
     ordersRepository = new FakeOrdersRepository();
-    listOrderService = new ListOrderService(ordersRepository);
+    fakeCacheProvider = new FakeCacheProvider();
+    listOrderService = new ListOrderService(ordersRepository, fakeCacheProvider);
   });
 
   it("should be able to list all orders", async () => {

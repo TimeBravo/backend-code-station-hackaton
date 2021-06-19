@@ -34,6 +34,9 @@ export default class Stage {
   @Column("simple-array")
   photos: string[];
 
+  @Column()
+  description: string;
+
   @Exclude()
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

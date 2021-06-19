@@ -1,3 +1,4 @@
+import FakeCacheProvider from "@shared/container/providers/cacheProvider/fakes/FakeCacheProvider";
 import AppError from "@shared/errors/AppError";
 
 import FakeOrdersRepository from "../repositories/fakes/FakeOrdersRepository";
@@ -5,11 +6,13 @@ import CreateOrderService from "./CreateOrderService";
 
 let createOrderService: CreateOrderService;
 let ordersRepository: FakeOrdersRepository;
+let fakeCacheProvider: FakeCacheProvider;
 
 describe("Create Order Service", () => {
   beforeEach(() => {
     ordersRepository = new FakeOrdersRepository();
-    createOrderService = new CreateOrderService(ordersRepository);
+    fakeCacheProvider = new FakeCacheProvider();
+    createOrderService = new CreateOrderService(ordersRepository, fakeCacheProvider);
   });
 
   it("should be able to create a new order", async () => {
@@ -17,7 +20,11 @@ describe("Create Order Service", () => {
       clientName: "John Doe",
       clientPhone: "+559999999999",
       productName: "Doe's machines",
-      stageList: ["corte", "dobra", "expedição"],
+      stageList: [
+        { stageName: "corte", stageDescription: "Nessa Estapa:\n -Corte de peças e soldagem" },
+        { stageName: "dobra", stageDescription: "Nessa Estapa:n\n -Dobra de peças e soldagem" },
+        { stageName: "expedição", stageDescription: "Nessa Estapa:\n -Saida da mercadoria" },
+      ],
     });
 
     expect(order).toHaveProperty("id");
@@ -30,7 +37,11 @@ describe("Create Order Service", () => {
         clientName: "John Doe",
         clientPhone: "+559999999999",
         productName: "Doe's machines",
-        stageList: ["corte", "corte", "expedição"],
+        stageList: [
+          { stageName: "corte", stageDescription: "Nessa Estapa:\n -Corte de peças e soldagem" },
+          { stageName: "corte", stageDescription: "Nessa Estapa:n\n -Corte de peças e soldagem" },
+          { stageName: "expedição", stageDescription: "Nessa Estapa:\n -Saida da mercadoria" },
+        ],
       })
     ).rejects.toBeInstanceOf(AppError);
   });

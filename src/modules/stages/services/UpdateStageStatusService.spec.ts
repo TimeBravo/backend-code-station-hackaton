@@ -26,6 +26,7 @@ describe("Update a stage status", () => {
       updatedAt: new Date(),
       status: "WAITING",
       order: new Order(),
+      description: "test-description",
       getAvatarURL: () => null,
     });
 
@@ -47,6 +48,7 @@ describe("Update a stage status", () => {
       updatedAt: new Date(),
       status: "STARTED",
       order: new Order(),
+      description: "test-description",
       getAvatarURL: () => null,
     });
 
@@ -68,6 +70,7 @@ describe("Update a stage status", () => {
       updatedAt: new Date(),
       status: "FINISHED",
       order: new Order(),
+      description: "test-description",
       getAvatarURL: () => null,
     });
 
@@ -85,6 +88,7 @@ describe("Update a stage status", () => {
       updatedAt: new Date(),
       status: "FINISHED",
       order: new Order(),
+      description: "test-description",
       getAvatarURL: () => null,
     });
 

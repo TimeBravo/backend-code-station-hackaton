@@ -22,7 +22,9 @@ orderRoutes.post(
         .regex(/^\+[1-9]\d{9,14}$/)
         .required(),
       clientEmail: Joi.string().optional(),
-      stageList: Joi.array().required(),
+      stageList: Joi.array()
+        .items({ stageName: Joi.string().required(), stageDescription: Joi.string().required() })
+        .required(),
     },
   }),
   orderController.create
