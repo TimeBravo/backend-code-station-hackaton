@@ -21,7 +21,7 @@ export default class OrderController {
 
     const sendMessageService = container.resolve(SendMessageService);
 
-    const body = `Olá ${order.clientName}, seu pedido de id ${order.id} foi registrado a primeira etapa é ${order.stages[0].name} acesse o link testeUrl para visualizar seu pedido`;
+    const body = `Olá ${order.clientName}, seu pedido de id ${order.id} foi registrado a primeira etapa é ${order.stages[0].name} acesse o link https://stageview.herokuapp.com/order/${order.id} para visualizar seu pedido`;
 
     await sendMessageService.execute({ to: order.clientPhone, from: "+14155238886", body });
 

@@ -13,6 +13,12 @@ export default class StageController {
 
     const stage = await updateStageStatusService.execute(stageID);
 
+    const sendMessageService = container.resolve(SendMessageService);
+
+    const body = `Olá ${stage.order.clientName}, seu pedido de id ${stage.orderID} teve o status da etapa ${stage.name} atualizado para ${stage.status} acesse o link https://stageview.herokuapp.com/order/${stage.orderID} para visualizar seu pedido`;
+
+    await sendMessageService.execute({ to: stage.order.clientPhone, from: "+14155238886", body });
+
     return response.json(classToClass(stage));
   }
 
@@ -24,12 +30,6 @@ export default class StageController {
     const addPictureService = container.resolve(AddPicturesToStageService);
 
     const stage = await addPictureService.execute({ stageID, fileNames });
-
-    const sendMessageService = container.resolve(SendMessageService);
-
-    const body = `Olá ${stage.order.clientName}, seu pedido de id ${stage.orderID} teve o status da etapa ${stage.name} atualizado para ${stage.status} acesse o link testeUrl para visualizar seu pedido`;
-
-    await sendMessageService.execute({ to: stage.order.clientPhone, from: "+14155238886", body });
 
     return response.json(classToClass(stage));
   }

@@ -10,6 +10,10 @@ const orderRoutes = Router();
 
 const orderController = new OrderController();
 
+orderRoutes.get("/", orderController.index);
+
+orderRoutes.use(orderDetailsRoutes);
+
 orderRoutes.use(ensureAuthenticated);
 
 orderRoutes.post(
@@ -29,9 +33,5 @@ orderRoutes.post(
   }),
   orderController.create
 );
-
-orderRoutes.get("/", orderController.index);
-
-orderRoutes.use(orderDetailsRoutes);
 
 export default orderRoutes;
